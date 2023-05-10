@@ -159,6 +159,10 @@
 
 `git reflog`
 
+将本地文件加入远端仓库
+
+`git remote add origin [URL]`
+
 
 
 
