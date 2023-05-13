@@ -290,6 +290,25 @@ find path [-option] [查找条件]
 find / -name test.txt
 find ./ -name "*test*" （"*" 通配字符）
 ```
+
+从数据库中查找（更快搜索）
+```
+locate [-d DBPATH] [--version] [查找条件]
+    - 从数据库中搜索，速度较快，每天更新一次
+    - -d 使用 DBPATH代替默认数据库 (/var/lib/mlocate/mlocate.db) 
+    - 使用 updatedb 命令更新数据库
+
+whereis [-option] 文件或目录名称
+    - 只用于从数据库中查找程序名，一星期更新一次
+    - -b 只找二进制文件
+    - -m 只找在说明文件manual路径下的文件
+    - -s 只找source源文件
+
+which 可执行文件名称
+    - 用于通过PATH环境变量到该路径查找可执行文件
+    - 例子 which passwd / which php
+```
+
 ---
 
 查看文件内容
