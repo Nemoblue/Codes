@@ -202,7 +202,7 @@ ROLLBACK后的数据状态
 SAVEPOINT a;
 ROLLBACK TO SAVEPOINT a;
 ```
-![control.png](control.png)
+![control.png](./img/control.png)
 
 ---
 

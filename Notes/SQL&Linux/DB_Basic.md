@@ -204,7 +204,7 @@ ALLEN   20-FEB-15   25.8517626  21-FEB-15   19-FEB-15
 
 常用转换函数
 
-![convert.png](convert.png)
+![convert.png](./img/convert.png)
 
 ```
 SELECT ename, hiredate TO_CHAR(hiredate, 'YYYY-MM-DD')

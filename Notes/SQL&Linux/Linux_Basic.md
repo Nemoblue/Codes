@@ -187,7 +187,7 @@ Linux文件和目录权限
 
 文件属性和权限示例
 
-![file.png](file.png)
+![file.png](./img/file.png)
 
 ---
 

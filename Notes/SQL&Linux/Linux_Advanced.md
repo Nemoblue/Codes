@@ -250,7 +250,7 @@ Linux 网络基础
 
 守护进程与用户进程的关系
 
-![process.png](process.png)
+![process.png](./img/process.png)
 
 ---
 
