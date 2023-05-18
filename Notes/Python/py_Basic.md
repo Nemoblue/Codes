@@ -350,3 +350,49 @@
     ```
 
 ---
+
+## 流程控制
+
+循环相关
+- `break` 可以用来立即退出循环语句（包括else）
+- `continue` 可以用来跳过当次循环
+- `break` 和 `continue` 都是只对离他最近的循环起作用
+- `pass` 是用来在判断或循环语句中占位的
+
+```
+i = 0
+if i < 5:
+    pass
+```
+
+程序优化
+- 引入一个 time 模块，来统计程序执行的时间
+- `time()` 函数可以用来获取当前的时间，返回的单位是秒
+
+```
+from time import *
+
+begin = time()
+
+i = 2
+while i <= 100000:
+    flag = True
+    j = 2 
+    while j <= i ** 0.5:
+        if i % j == 0:
+            flag = False
+            # 一旦进入判断，则证明i一定不是质数，此时内层循环没有继续执行的必要
+            # 使用break来退出内层的循环
+            break
+        j += 1
+    if flag :
+        # print(i)  
+        pass
+    i += 1
+
+# 获取程序结束的时间
+end = time()
+
+# 计算程序执行的时间
+print("程序执行花费了：",end - begin , "秒")
+```
