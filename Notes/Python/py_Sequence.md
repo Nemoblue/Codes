@@ -1,4 +1,4 @@
-# Python Advanced
+# Python Sequence
 
 ## 列表（`list`）
 

@@ -1,4 +1,4 @@
-# Python Manual
+# Python Function
 
 ## 函数
 
@@ -285,3 +285,263 @@
 ---
 
 ## 高阶函数
+
+递归
+
+- 递归式函数的两个条件
+    - `基线条件`
+        
+        问题可以被分解为的最小问题，当满足基线条件时，递归就不再继续执行
+
+    - `递归条件`
+        
+        将问题继续分解的条件
+
+    ```
+    def palindrome(s):
+        '''
+        该函数用来检查指定的字符串是否回文字符串，如果是返回True，否则返回False
+
+        参数：
+            s：检查的字符串
+        '''
+        # 基线条件
+        if len(s) < 2 :
+            # 字符串的长度小于2，则字符串一定是回文
+            return True
+            
+        # 递归条件    
+        return s[0] == s[-1] and palindrome(s[1:-1])
+    ```
+---
+
+高阶函数
+
+- 在 Python 中，函数是一等对象
+
+- 一等对象一般都会具有如下特点：
+    - 对象是在运行时创建的
+    - 能赋值给变量或作为数据结构中的元素
+    - 能作为参数传递
+    - 能作为返回值返回
+    
+- 高阶函数至少要符合以下两个特点中的一个
+    - 接收一个或多个函数作为参数
+    - 将函数作为返回值返回
+
+    ```
+    # 创建一个列表
+    l = [1,2,3,4,5,6,7,8,9,10]
+
+    # 检查一个任意的数字是否是偶数
+    def fn2(i) :
+        return i % 2 == 0    
+
+    # 检查指定的数字是否大于5
+    def fn3(i):
+        return i > 5
+
+    def fn(func, lst) :
+        '''
+        fn()函数可以将指定列表中的所有满足条件的数获取出来，并保存到一个新列表中返回
+
+        参数：
+            lst：要进行筛选的列表
+        '''
+        # 创建一个新列表
+        new_list = []
+
+        # 对列表进行筛选
+        for n in lst:
+            # 判断条件
+            if func(n) :
+                new_list.append(n)
+
+        # 返回新列表
+        return new_list
+    ```
+
+- `filter()` 可以从序列中过滤出符合条件的元素，保存到一个新的序列中
+    - 参数：
+        - 函数，根据该函数来过滤序列（可迭代的结构）
+        - 需要过滤的序列（可迭代的结构）
+
+    - 返回值：过滤后的新序列（可迭代的结构）
+
+    ```
+    r = filter(fn3, l)
+    print(list(r))
+    ```
+---
+
+匿名函数
+
+- lambda函数表达式专门用来创建一些简单的函数，一般都是作为参数使用，其他地方一般不会使用
+
+- 语法：`lambda 参数列表 : 返回值`
+
+    ```
+    r = filter(lambda i : i > 5 , l)
+    print(list(r))
+    ```
+
+- `map()` 函数可以对可迭代对象中的所有元素做指定的操作，然后将其添加到一个新的对象中返回
+
+    ```
+    r = map(lambda i : i ** 2 , l)
+    print(list(r))
+    ```
+
+- `sort()` 用来对列表中的元素进行排序
+    - 可以接收一个关键字参数，`key` 
+    - 当设置了函数作为参数，每次都会以列表中的一个元素作为参数来调用函数，并且使用函数的返回值来比较元素的大小
+
+    ```
+    l = ['bb', 'aaaa', 'c', 'ddddddddd', 'fff']
+
+    # 根据长度排序
+    l.sort(key = len)
+
+    l = [2, 5, '1', 3, '6', '4']
+
+    # 全部转换成整型并比较
+    l.sort(key = int)
+    ```
+
+- `sorted()` 可以对任意的序列进行排序
+    - 使用 `sorted()` 排序不会影响原来的对象，而是返回一个新对象
+
+    ```
+    l = [2,5,'1',3,'6','4']
+
+    print(l)    # 保持原序列
+    print(sorted(l, key=int))
+    ```
+
+---
+
+闭包
+
+- 将函数作为返回值返回，称为闭包，通过闭包可以创建一些只有当前函数能访问的变量
+
+- 可以将一些**私有数据**藏到闭包中，减少全局变量
+
+    ```
+    def fn():
+        a = 10
+
+        # 函数内部再定义一个函数
+        def inner():
+            print('fn2: ' , a)
+
+        # 将内部函数 inner作为返回值返回   
+        return inner
+
+    # r 是一个函数，是调用 fn() 后返回的函数
+    # 这个函数在 fn() 内部定义，并不是全局函数
+    # 这个函数总是能访问到 fn() 函数内的变量
+    r = fn()    
+
+    r() # fn2: 10
+    ```
+
+- 形成闭包的要件
+    - 函数嵌套
+    - 将内部函数作为返回值返回
+    - 内部函数必须要使用到外部函数的变量
+
+    ```
+    def make_average():
+        # 创建一个私有列表，用来保存数值
+        nums = []
+
+        # 创建一个函数，用来计算平均值
+        def average(n) :
+            # 将n添加到列表中
+            nums.append(n)
+            # 求平均值
+            return sum(nums) / len(nums)
+
+        return average
+
+    average = make_average()
+
+    print(average(10))
+    print(average(20))
+    print(average(30))
+    print(average(40))
+    ```
+
+---
+
+装饰器
+- 装饰器可以在不修改原来函数的情况下来对函数进行扩展
+- 开闭原则（`OCP`）：程序的设计要求开放对程序的扩展，关闭对程序的修改
+
+    ```
+    def add(a , b):
+        return a + b
+
+    def mul(a , b):
+        return a * b  
+        
+    def begin_end(old):
+        '''
+        用来对其他函数进行扩展，使其他函数可以在执行前打印开始执行，执行后打印执行结束
+
+        参数：
+            old 要扩展的函数对象
+        '''
+
+        # 创建一个新函数
+        def new_function(*args , **kwargs):
+            print('Start Execution')
+
+            # 调用被扩展的函数
+            result = old(*args, **kwargs)
+
+            print('End Execution')
+            
+            # 返回函数的执行结果
+            return result
+
+        # 返回新函数        
+        return new_function
+
+    f2 = begin_end(add)
+    f3 = begin_end(mul)
+    ```
+
+- 在定义函数时，可以通过 `@` 来使用指定的装饰器装饰当前的函数
+
+- 可以同时为一个函数指定多个装饰器，这样函数将会按照从内向外的顺序被装饰
+
+    ```
+    def fn3(old):
+        # 创建一个新函数
+        def new_function(*args, **kwargs):
+
+            print('fn3 Start')
+            result = old(*args, **kwargs)
+            print('fn3 End')
+
+            # 返回函数的执行结果
+            return result
+
+        # 返回新函数        
+        return new_function
+
+    @fn3
+    @begin_end
+    def say_hello():
+        print('Hello')
+
+    '''
+    fn3 Start
+    Start Execution
+    Hello
+    End Execution
+    fn3 End
+    '''
+    say_hello()
+    ```
