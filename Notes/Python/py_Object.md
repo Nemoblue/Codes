@@ -589,8 +589,9 @@ class Person(object):
     def __gt__(self , other):
         return self.age > other.age
 ```
+---
 
-## 模块化（ `module` ）
+## 模块化（`module`）
 
 模块化，模块化指将一个完整的程序分解为一个一个小的模块，通过将模块组合，来搭建出一个完整的程序
 
@@ -652,4 +653,88 @@ class Person(object):
 
     test2() # 无法访问模块中函数
     new_test2()
+    ```
+---
+
+##  包（`package`）
+
+包也是一个模块，普通的模块就是一个py文件，而包是一个文件夹
+
+- 当我们模块中代码过多时，或者一个模块需要被分解为多个模块时，这时需要使用到包
+- 包中必须要一个 `__init__.py` 这个文件，这个文件中可以包含有包中的主要内容
+
+    ```
+    from hello import a , b
+
+    print(a.c)
+    print(b.d)
+    ```
+
+- `__pycache__` 是模块的缓存文件
+    - python 代码在执行前，需要被解析器先转换为机器码，然后再执行
+    - 为了提高程序运行的性能，python会在编译过一次以后，将代码保存到一个缓存文件中
+    - 下次加载这个模块（包）时，就可以不再重新编译而是直接加载缓存中编译好的代码即可
+
+---
+
+## Python 标准库
+
+`sys` 模块
+
+- 获取 Python 解析器的信息，或者通过函数来操作Python解析器
+
+    ```
+    import sys
+    
+    # pprint 模块用来对打印的数据做简单的格式化
+    import pprint
+    ```
+
+- `sys.argv`
+    - 获取执行代码时，命令行中所包含的参数
+    - 该属性是一个列表，列表中保存了当前命令的所有参数
+
+    ```
+    print(sys.argv)
+    ```
+
+- `sys.modules`
+    - 获取当前程序中引入的所有模块
+    - `modules` 是一个字典，字典的 `key` 是模块的名字，字典的 `value` 是模块对象
+
+    ```
+    pprint.pprint(sys.modules)
+    ```
+
+- `sys.path`
+    - 获取模块的搜索路径列表
+
+- `sys.platform`
+    -  表示当前 Python 运行的平台
+
+- `sys.exit()`
+    - 用来退出程序
+
+    ```
+    sys.exit('程序结束')
+    print('hello')  # 不会运行
+    ```
+
+`os` 模块
+- 可以对操作系统进行访问
+    ```
+    import os
+    ```
+
+- `os.environ`
+    - 可以获取到系统的环境变量
+    ```
+    pprint.pprint(os.environ['path'])
+    ```
+
+- `os.system()`
+    - 可以用来执行操作系统的命令
+    ```
+    os.system('dir')
+    os.system('notepad')
     ```
