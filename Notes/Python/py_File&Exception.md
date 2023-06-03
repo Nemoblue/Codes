@@ -1,4 +1,6 @@
-# Python Files
+# Python File & Exception
+
+## 文件
 
 操作文件步骤
 - 打开文件
@@ -269,3 +271,105 @@
     os.rename('aa.txt','bb.txt')
     os.rename('bb.txt','c:/bb.txt')
     ```
+
+---
+
+## 异常
+
+处理异常
+
+- 在出现异常时，我们可以编写代码来对异常进行处理
+
+- 处理异常基本结构
+    ```
+    try语句
+        try:
+            代码块（可能出现错误的语句）
+
+        except 异常类型 as 异常名:
+            代码块（出现错误以后的处理方式）
+
+        except 异常类型 as 异常名:
+            代码块（出现错误以后的处理方式）
+
+        else：
+            代码块（没出错时要执行的语句）  
+
+        finally:
+            代码块（该代码块总会执行）    
+
+        # try是必须的 else语句有没有都行
+        # except和finally至少有一个 
+    ```
+
+---
+
+异常对象
+
+- 当程序运行过程中出现异常以后，所有的异常信息会被保存一个专门的异常对象中
+
+- 异常传播时，实际上就是异常对象抛给了调用处
+    - `ZeroDivisionError` 类的对象专门用来表示除以 0 的异常
+    - `NameError` 类的对象专门用来处理变量错误的异常
+
+- 如果 `except` 后跟着一个异常的类型，那么此时它只会捕获该类型的异常
+
+- 如果 `except` 后不跟任何的内容，则此时它会捕获到所有的异常
+
+- `Exception` 是所有异常类的父类，所以如果 `except` 后跟的是 `Exception`，他也会捕获到所有的异常
+
+- 可以在异常类后边跟着一个 `as xx` 此时 `xx` 就是异常对象
+
+    ```
+    l = []
+    try:
+        # print(c)
+        # l[10]
+        # 1 + 'hello'
+        print(10/0)
+
+    except NameError:
+        print('出现 NameError 异常')
+
+    except ZeroDivisionError:
+        print('出现 ZeroDivisionError 异常')
+
+    except IndexError:
+        print('出现 IndexError 异常')
+
+    except Exception as e :
+        print('未知异常', e, type(e))
+
+    finally :
+        print('无论是否出现异常，该子句都会执行')
+    ```
+
+---
+
+抛出异常
+
+- 可以使用 `raise` 语句来抛出异常
+    - `raise` 语句后需要跟一个 异常类 或 异常的实例
+
+- 可以自定义异常类，只需要创建一个类继承 `Exception` 即可
+
+```
+class MyError(Exception):
+    pass
+
+def add(a,b):
+    # 如果a和b中有负数，就向调用处抛出异常
+    if a < 0 or b < 0:  
+        # 抛出异常的目的，告诉调用者这里调用时出现问题，希望你自己处理一下
+        # raise Exception('两个参数中不能有负数！')  
+        
+        # 也可以通过if else来代替异常的处理
+        # return None
+
+        raise MyError('自定义的异常')
+        
+    r = a + b
+    return r
+
+print(add(-123,456))
+```
